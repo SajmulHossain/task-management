@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
 import signUpImg from '../assets/images/signup.jpg'
 import SignInWithGoogle from '../component/SignInWithGoogle';
+import useAuth from '../hooks/useAuth';
+import Loading from '../component/Loading';
 
 const Register = () => {
+  const {loading} = useAuth();
+  if(loading) {
+    return <Loading />
+  }
   return (
     <section className="section flex min-h-screen justify-center items-center flex-col gap-10">
       <h3 className="font-semibold text-2xl">

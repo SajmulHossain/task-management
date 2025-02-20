@@ -1,9 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
 import loginImg from '../assets/images/login.jpg'
 import SignInWithGoogle from "../component/SignInWithGoogle";
+import useAuth from "../hooks/useAuth";
+import Loading from "../component/Loading";
 
 const Login = () => {
   const { state } = useLocation();
+   const { loading } = useAuth();
+   if (loading) {
+     return <Loading />;
+   }
 
   return (
     <section className="section flex min-h-screen justify-center items-center flex-col gap-10">
