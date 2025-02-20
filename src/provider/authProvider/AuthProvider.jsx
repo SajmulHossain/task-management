@@ -24,38 +24,36 @@ const AuthProvider = ({ children }) => {
   const createNewUser = (email, password) => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password);
-  }
+  };
 
   const logout = () => {
     return signOut(auth);
-  }
+  };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      if(currentUser) {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
         setUser(currentUser);
       } else {
-        currentUser(null);
+        setUser(null);
       }
       setLoading(false);
-    })
+    });
 
     return () => {
       unsubscribe();
-    }
-  }, [])
+    };
+  }, []);
 
-  const data = { 
-    user, 
-    signInWithGoogle, 
-    createNewUser, 
-    loading, 
-    logout
+  const data = {
+    user,
+    signInWithGoogle,
+    createNewUser,
+    loading,
+    logout,
   };
 
-  return <AuthContext.Provider value={data}>
-      {children}
-    </AuthContext.Provider>;
+  return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
