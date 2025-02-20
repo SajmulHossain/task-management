@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 
 const Register = () => {
-  const { loading, createNewUser, updateUser } = useAuth();
+  const { loading, createNewUser, updateUser, setLoading } = useAuth();
   const [error, setError] = useState('');
 
   if(loading) {
@@ -41,6 +41,7 @@ const Register = () => {
     })
     .catch(({code}) => {
       toast.error(code);
+      setLoading(false);
     })
   }
   return (
