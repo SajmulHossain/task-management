@@ -3,8 +3,9 @@ import AuthContext from "./AuthContext";
 
 
 const AuthProvider = ({children}) => {
+  const data = {};
   return (
-    <AuthContext.Provider value={''}>
+    <AuthContext.Provider value={data}>
       {children}
     </AuthContext.Provider>
   );
