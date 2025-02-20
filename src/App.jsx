@@ -1,4 +1,6 @@
+import { Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuth"
+import Header from "./sharedComponents/Header";
 
 
 function App() {
@@ -7,7 +9,10 @@ function App() {
 
   return (
     <>
-      <p className="font-bold text-xl"></p>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
     </>
   )
 }
