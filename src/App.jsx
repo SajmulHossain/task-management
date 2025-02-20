@@ -1,11 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuth"
 import Header from "./sharedComponents/Header";
 
 
 function App() {
-  const data = useAuth();
-  console.log(data);
+  const {user} = useAuth();
+
+  if(!user) {
+    return <Navigate to='/login' state={{isRedirected: true}} />
+  }
 
   return (
     <>
