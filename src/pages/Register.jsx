@@ -3,11 +3,45 @@ import signUpImg from '../assets/images/signup.jpg'
 import SignInWithGoogle from '../component/SignInWithGoogle';
 import useAuth from '../hooks/useAuth';
 import Loading from '../component/Loading';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const Register = () => {
-  const {loading} = useAuth();
+  const { loading, createNewUser, updateUser } = useAuth();
+  const [error, setError] = useState('');
+
   if(loading) {
     return <Loading />
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    setError('');
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    if(!email || !name || !password) {
+      return setError("Please fill all inputs with valid information")
+    }
+
+    createNewUser(email, password)
+    .then(res => {
+      toast.success('Registration Successfull!');
+      const data = {
+        userId: res?.uid,
+        email,
+        name
+      }
+      updateUser(name);
+      axios.post(`http://localhost:3000/user/${email}`, data);
+    })
+    .catch(({code}) => {
+      toast.error(code);
+    })
   }
   return (
     <section className="section flex min-h-screen justify-center items-center flex-col gap-10">
@@ -19,16 +53,22 @@ const Register = () => {
           <img className="w-full h-full object-cover" src={signUpImg} />
         </div>
         <div className='w-full'>
-          <form>
+          <form onSubmit={handleRegister}>
             <div className='flex flex-col gap-4 border p-4 rounded border-second'>
               <h3 className='font-bold text-center text-2xl border-b border-main pb-2'>Sign Up</h3>
+
+              {
+                error && <p className='text-center text-lg text-red-600'>{error}</p>
+              }
               <div className="flex flex-col gap-2">
                 <label htmlFor="name">Name</label>
                 <input
                   type="text"
                   id="name"
+                  name='name'
                   placeholder='Name'
                   className="border border-main rounded px-3 w-full py-2"
+                  required
                 />
               </div>
 
@@ -37,14 +77,16 @@ const Register = () => {
                 <input
                   type="email"
                   id="email"
+                  name='email'
                   placeholder='Email'
                   className="border border-main rounded px-3 w-full py-2"
+                  required
                 />
               </div>
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password" className="border border-main rounded px-3 py-2" placeholder='Password' />
+                <input type="password" required name="password" id="password" className="border border-main rounded px-3 py-2" placeholder='Password' />
               </div>
 
               <div>
