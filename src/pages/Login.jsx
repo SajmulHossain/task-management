@@ -27,16 +27,6 @@ const Login = () => {
                 Log in
               </h3>
               <div className="flex flex-col gap-2">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Name"
-                  className="border border-main rounded px-3 w-full py-2"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -66,9 +56,9 @@ const Login = () => {
       </div>
 
       <p>
-        Already have an account?{" "}
-        <Link to="/login" className="text-main">
-          Login
+         {`Don't have an account? `}
+        <Link to="/register" className="text-main">
+          Sign Up
         </Link>
       </p>
     </section>
