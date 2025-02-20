@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import loginImg from '../assets/images/login.jpg'
+import SignInWithGoogle from "../component/SignInWithGoogle";
 
 const Login = () => {
   const { state } = useLocation();
@@ -50,6 +51,7 @@ const Login = () => {
               <div>
                 <button className="btn">Sign Up</button>
               </div>
+              <SignInWithGoogle />
             </div>
           </form>
         </div>

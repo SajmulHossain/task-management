@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import signUpImg from '../assets/images/signup.jpg'
+import SignInWithGoogle from '../component/SignInWithGoogle';
 
 const Register = () => {
   return (
@@ -43,6 +44,7 @@ const Register = () => {
               <div>
                 <button className='btn'>Sign Up</button>
               </div>
+              <SignInWithGoogle />
             </div>
           </form>
         </div>
