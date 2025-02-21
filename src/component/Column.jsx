@@ -5,7 +5,7 @@ import Task from "./Task";
 const Column = ({tasks}) => {
   return (
     <div className="flex flex-col gap-2 bg-second/10 p-4 rounded">
-      <SortableContext items={tasks} strategy={rectSwappingStrategy}>
+      <SortableContext items={tasks} strategy={CountQueuingStrategy}>
         {tasks.map((task) => (
           <Task key={task.id} id={task?.id} title={task?.title} />
         ))}

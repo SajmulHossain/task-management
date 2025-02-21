@@ -4,6 +4,8 @@ import App from '../App';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import PrivetRoute from './PrivetRoute';
+import Todo from '../component/Todo';
+import AddTask from '../pages/AddTask/AddTask';
 
 const routes = createBrowserRouter([
   {
@@ -13,6 +15,16 @@ const routes = createBrowserRouter([
         <App />
       </PrivetRoute>
     ),
+    children: [
+      {
+        index: true,
+        element: <Todo />
+      }, 
+      {
+        path: '/add-task',
+        element: <AddTask />
+      }
+    ]
   },
   {
     path: "/login",

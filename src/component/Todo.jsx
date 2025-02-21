@@ -2,6 +2,7 @@ import { closestCorners, DndContext } from "@dnd-kit/core";
 import { useState } from "react";
 import Column from "./Column";
 import { arrayMove } from "@dnd-kit/sortable";
+import { Link } from "react-router-dom";
 
 const initialTasks = [
   { id: 1, title: "Bhat khaite hobe", status: "todo" },
@@ -31,7 +32,17 @@ const Todo = () => {
 
   return (
     <section className="section mt-8">
-      <h3 className="font-bold text-lg">Todo Board:</h3>
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-lg">Todo Board:</h3>
+        <div>
+          <Link
+            to="/add-task"
+            className="btn bg-gradient-to-r from-main to-second text-white"
+          >
+            Add Task
+          </Link>
+        </div>
+      </div>
       <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
         <div className="flex space-x-4 mt-4">
           {Object.keys(columns).map((columnId) => (

@@ -1,7 +1,7 @@
 import useAuth from "./hooks/useAuth"
 import Header from "./sharedComponents/Header";
 import Loading from "./component/Loading";
-import Todo from "./component/Todo";
+import { Outlet } from "react-router-dom";
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
     <>
       <Header />
       <main>
-        <Todo />
+        <Outlet />
       </main>
     </>
   )
