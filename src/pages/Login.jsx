@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from '../assets/images/login.jpg'
 import SignInWithGoogle from "../component/SignInWithGoogle";
 import useAuth from "../hooks/useAuth";
@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 const Login = () => {
   const { state } = useLocation();
   const [error, setError] = useState('');
+  const navigate = useNavigate();
    const { loading, login, setLoading } = useAuth();
    if (loading) {
      return <Loading />;
@@ -31,6 +32,7 @@ const Login = () => {
     .then((res) => {
       if(res) {
         toast.success("Login Successfull!");
+        navigate('/');
       } else {
         toast.error("Something Went Wrong");
       }

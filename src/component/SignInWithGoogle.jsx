@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 import googleLogo from '../assets/images/googleLogo.png'
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SignInWithGoogle = () => {
   const { signInWithGoogle, setLoading } = useAuth();
@@ -9,10 +10,22 @@ const SignInWithGoogle = () => {
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-    .then((res) => {
-        if(res) {
+    .then(({user}) => {
+        if(user) {
           toast.success("Sign in Successfull!");
           navigate("/");
+          const data = {
+            email: user?.email,
+            name: user?.displayName,
+            userId: user?.uid,
+          }
+          console.log(user);
+          try {
+            axios.post(`http://localhost:3000/user/${user?.email}`, data);
+            console.log(user?.email);
+          } catch (err) {
+            console.log(err);
+          }
         } else {
           toast.error("Something Went Wrong!");
         }

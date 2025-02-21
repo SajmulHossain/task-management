@@ -2,6 +2,7 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { FaCircleUser } from "react-icons/fa6";
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -26,12 +27,16 @@ const Header = () => {
         {user && (
           <div className="flex items-center gap-2">
             <div>
-              <img
-                src={user?.photoURL}
-                className="h-12 w-12 rounded-full"
-                referrerPolicy="no-referrer"
-                alt={`${user?.displayName}'s photo`}
-              />
+              {user?.photoURL ? (
+                <img
+                  src={user?.photoURL}
+                  className="h-12 w-12 rounded-full"
+                  referrerPolicy="no-referrer"
+                  alt={`${user?.displayName}'s photo`}
+                />
+              ) : (
+                <FaCircleUser size={36} />
+              )}
             </div>
             <div>
               <button
