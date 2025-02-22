@@ -1,7 +1,7 @@
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCircleUser } from "react-icons/fa6";
 
 const Header = () => {
@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <header className="bg-main text-white py-2">
       <section className="section flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Manage Task</h3>
+        <Link to='/' className="text-lg font-semibold">Manage Task</Link>
 
         {user && (
           <div className="flex items-center gap-2">
