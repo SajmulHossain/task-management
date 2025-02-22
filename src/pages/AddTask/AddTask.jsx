@@ -3,9 +3,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import Cruding from "../../component/Cruding";
 import { useMutation } from "@tanstack/react-query";
+import useAuth from "../../hooks/useAuth";
 
 const AddTask = () => {
   const [error, setError] = useState();
+  const {user} = useAuth();
 
   const {isPending, mutateAsync} = useMutation({
     mutationKey: ['tasks'],
@@ -34,6 +36,7 @@ const AddTask = () => {
 
     const data = {
       title,
+      author: user?.email,
       description,
       timeStamp: new Date(),
       category: 'to-do'
@@ -41,6 +44,7 @@ const AddTask = () => {
     
    try {
     mutateAsync(data);
+    form.reset();
    } catch (err) {
     console.log(err);
    }
@@ -72,12 +76,12 @@ const AddTask = () => {
 
             <div className="flex flex-col gap-2">
               <label htmlFor="description">Description</label>
-              <input
+              <textarea
                 type="text"
                 name="description"
                 placeholder="Description (Optional)"
                 id="description"
-                className="border border-second px-3 py-1 rounded"
+                className="border h-40 border-second px-3 py-1 rounded"
               />
             </div>
             <button

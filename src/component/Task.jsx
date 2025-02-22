@@ -10,7 +10,7 @@ const Task = ({id, title}) => {
     transform: CSS.Transform.toString(transform)
   }
   return (
-    <div className="bg-main/10 text-main px-3 py-2 rounded" ref={setNodeRef} {...attributes} {...listeners} style={style}>
+    <div className="bg-main/10 cursor-grab text-main px-3 py-2 rounded" ref={setNodeRef} {...attributes} {...listeners} style={style}>
       <h3 className="font-semibold">{title}</h3>
     </div>
   );

@@ -5,23 +5,23 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { Link } from "react-router-dom";
 
 const initialTasks = [
-  { id: 1, title: "Bhat khaite hobe", status: "todo" },
-  { id: 2, title: "Bhat khacci", status: "in progress" },
+  { id: 1, title: "Bhat khaite hobe", status: "to-do" },
+  { id: 2, title: "Bhat khacci", status: "in_progress" },
   { id: 3, title: "Bhat khaici", status: "done" },
 ];
 
-const columns = {
-  todo: { name: "Todo", color: "bg-red-200" },
-  "in progress": { name: "In Progress", color: "bg-blue-200" },
-  done: { name: "Done", color: "bg-green-200" },
-};
+const columns = [
+  {status: 'to-do', title: 'To-Do'},
+  {status: 'in_progress', title: 'In Progress'},
+  {status: 'done', title: 'Done'}
+]
 
 const Todo = () => {
   const [tasks, setTasks] = useState(initialTasks);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-    if (!over) return;
+    if (!over || !over) return;
 
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
@@ -43,9 +43,9 @@ const Todo = () => {
           </Link>
         </div>
       </div>
-      <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+      <DndContext  onDragEnd={handleDragEnd}>
         <div className="flex space-x-4 mt-4">
-          {Object.keys(columns).map((columnId) => (
+          {/* {Object.keys(columns).map((columnId) => (
             <Column
               key={columnId}
               id={columnId}
@@ -53,7 +53,11 @@ const Todo = () => {
               color={columns[columnId].color}
               tasks={tasks.filter((task) => task.status === columnId)}
             />
-          ))}
+          ))} */}
+
+          {
+            columns.map(column => <Column tasks={tasks.filter(task => task?.status === column.status)} column={column} key={column?.status} />)
+          }
         </div>
       </DndContext>
     </section>
