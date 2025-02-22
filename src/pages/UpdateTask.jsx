@@ -24,7 +24,7 @@ const UpdateTask = () => {
   const {mutateAsync, isPending} = useMutation({
     mutationKey: ['task', id],
     mutationFn: async(updatedData) => {
-      const { data } = await axios.put(`http://localhost:3000/task/${id}`, updatedData);
+      const { data } = await axios.put(`https://task-management-server-beryl-pi.vercel.app/task/${id}`, updatedData);
       if(data?.modifiedCount) {
         toast.success("Updated Successfully!");
         navigate('/');

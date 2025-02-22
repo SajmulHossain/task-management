@@ -35,7 +35,7 @@ const Todo = () => {
   const {mutateAsync, isPending} = useMutation({
     mutationKey: ['task', user?.email],
     mutationFn: async(id) => {
-      const {data} = await axios.delete(`http://localhost:3000/task/${id}`)
+      const {data} = await axios.delete(`https://task-management-server-beryl-pi.vercel.app/task/${id}`)
       if(data?.deletedCount) {
         toast.success('Deleted Successfully!');
         fetchTask();
