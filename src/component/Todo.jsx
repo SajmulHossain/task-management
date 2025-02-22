@@ -5,12 +5,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 
-// const initialTasks = [
-//   { id: 1, title: "Bhat khaite hobe", status: "to-do" },
-//   { id: 2, title: "Bhat khacci", status: "in_progress" },
-//   { id: 3, title: "Bhat khaici", status: "done" },
-// ];
-
 const columns = [
   { status: "to-do", title: "To-Do" },
   { status: "in_progress", title: "In Progress" },
@@ -24,7 +18,6 @@ const Todo = () => {
   useEffect(() => {
     axios.get(`https://task-management-server-beryl-pi.vercel.app/tasks/${user?.email}`)
     .then(({data}) => {
-      console.log(data);
       setTasks(data);
     })
     .catch(err => console.log(err))
