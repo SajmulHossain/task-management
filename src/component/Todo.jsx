@@ -31,7 +31,7 @@ const Todo = () => {
   };
 
   return (
-    <section className="section mt-8 ">
+    <section className="section mt-8 /">
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-lg">Todo Board:</h3>
         <div>
