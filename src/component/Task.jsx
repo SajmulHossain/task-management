@@ -17,6 +17,7 @@ const Task = ({ task, isPending, mutateAsync }) => {
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : undefined,
     transition: !transform ? "transform 0.2s ease" : undefined,
+    touchAction: 'none'
   };
 
   const handleDelete = async () => {
