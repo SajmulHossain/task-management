@@ -3,20 +3,25 @@
 import { useDraggable } from "@dnd-kit/core";
 import { format } from "date-fns";
 import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Cruding from "./Cruding";
 
-const Task = ({task}) => {
-  
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
+const Task = ({ task, isPending, mutateAsync }) => {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task._id.toString(),
-    data: {category: task?.category}
-  })
+    data: { category: task?.category },
+  });
   const style = {
     transform: transform
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : undefined,
     transition: !transform ? "transform 0.2s ease" : undefined,
   };
+
+  const handleDelete = async () => {
+   await mutateAsync(task?._id);
+  }
   return (
     <div
       className="bg-main/10 cursor-grab relative text-main px-3 py-2 rounded"
@@ -37,9 +42,14 @@ const Task = ({task}) => {
         </span>
       </p>
 
-      <Link className="absolute top-4 right-4" to={`/task/update/${task?._id}`}>
-        <CiEdit className="text-second" size={24} />
-      </Link>
+      <div className="absolute top-4 right-4 flex gap-4">
+        <Link to={`/task/update/${task?._id}`}>
+          <CiEdit className="text-second" size={24} />
+        </Link>
+        <button title="Double Tap To Delete" className="cursor-pointer" onClick={handleDelete}>
+          {isPending ? <Cruding /> : <MdDelete color="red" size={24} />}
+        </button>
+      </div>
     </div>
   );
 };
