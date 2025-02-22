@@ -22,7 +22,7 @@ const Todo = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/tasks/${user?.email}`)
+    axios.get(`https://task-management-server-beryl-pi.vercel.app/tasks/${user?.email}`)
     .then(({data}) => {
       console.log(data);
       setTasks(data);
@@ -45,7 +45,7 @@ const Todo = () => {
     );
 
     try {
-      await axios.patch(`http://localhost:3000/tasks/${taskId}`, {category: newCategory})
+      await axios.patch(`https://task-management-server-beryl-pi.vercel.app/tasks/${taskId}`, {category: newCategory})
     } catch(err) {
       console.log(err);
     }

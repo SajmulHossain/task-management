@@ -21,7 +21,7 @@ const SignInWithGoogle = () => {
           }
           console.log(user);
           try {
-            axios.post(`http://localhost:3000/user/${user?.email}`, data);
+            axios.post(`https://task-management-server-beryl-pi.vercel.app/user/${user?.email}`, data);
             console.log(user?.email);
           } catch (err) {
             console.log(err);

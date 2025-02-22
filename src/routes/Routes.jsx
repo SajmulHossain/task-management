@@ -6,6 +6,7 @@ import Register from '../pages/Register';
 import PrivetRoute from './PrivetRoute';
 import Todo from '../component/Todo';
 import AddTask from '../pages/AddTask/AddTask';
+import UpdateTask from '../pages/UpdateTask';
 
 const routes = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const routes = createBrowserRouter([
       {
         path: '/add-task',
         element: <AddTask />
+      },
+      {
+        path: '/task/update/:id',
+        element: <UpdateTask />
       }
     ]
   },

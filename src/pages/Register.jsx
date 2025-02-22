@@ -42,7 +42,7 @@ const Register = () => {
             name,
           };
           updateUser(name);
-          axios.post(`http://localhost:3000/user/${email}`, data);
+          axios.post(`https://task-management-server-beryl-pi.vercel.app/user/${email}`, data);
         })
         .catch(({ code }) => {
           toast.error(code);

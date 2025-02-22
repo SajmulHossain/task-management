@@ -1,41 +1,53 @@
-import axios from "axios";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import Cruding from "../component/Cruding";
+import Loading from "../component/Loading";
 import toast from "react-hot-toast";
-import Cruding from "../../component/Cruding";
-import { useMutation } from "@tanstack/react-query";
-import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
 
-const AddTask = () => {
-  const [error, setError] = useState();
-  const {user} = useAuth();
+const UpdateTask = () => {
+  const { user } = useAuth();
+  const [error, setError] = useState("");
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const {isPending, mutateAsync} = useMutation({
-    mutationKey: ['tasks'],
-    mutationFn: async(data) => {
-         axios.post("https://task-management-server-beryl-pi.vercel.app/tasks", data).then(({ data }) => {
-           if (data?.insertedId) {
-             toast.success("Task Successfully added!");
-             navigate('/');
-           } else {
-             toast.error("Something Went Wrong!");
-           }
-         });
-    } 
+  const {isLoading, data:task={}} = useQuery({
+    queryKey: ["task", id],
+    queryFn: async () => {
+      const { data } = await axios(`https://task-management-server-beryl-pi.vercel.app/task/${id}`);
+      return data;
+    },
+  });
+
+  const {mutateAsync, isPending} = useMutation({
+    mutationKey: ['task', id],
+    mutationFn: async(updatedData) => {
+      const { data } = await axios.put(`http://localhost:3000/task/${id}`, updatedData);
+      if(data?.modifiedCount) {
+        toast.success("Updated Successfully!");
+        navigate('/');
+      } else {
+        toast.error("Something Went Wrong!");
+      }
+    }
   })
 
-  const handleAddTask = e => {
+  
+
+  const handleUpdateTask = (e) => {
     e.preventDefault();
-    setError('');
+
+    setError("");
 
     const form = e.target;
 
     const title = form.title.value;
     const description = form.description.value;
 
-    if(!title) {
-      return setError('You must write your title.');
+    if (!title) {
+      return setError("You must write your title.");
     }
 
     const data = {
@@ -43,25 +55,26 @@ const AddTask = () => {
       author: user?.email,
       description,
       timeStamp: new Date(),
-      category: 'to-do'
+      category: task?.category,
+    };
+
+    try {
+      mutateAsync(data);
+    } catch(err) {
+      console.log(err);
     }
-    
-   try {
-    mutateAsync(data);
-    form.reset();
-   } catch (err) {
-    console.log(err);
-   }
+  };
 
-
-    
+  if(isLoading) {
+    return <Loading />
   }
+
   return (
     <section className="section mt-6">
       <div className="max-w-[600px] mx-auto border border-main p-4 rounded backdrop-blur-lg bg-main/10">
-        <form onSubmit={handleAddTask}>
+        <form onSubmit={handleUpdateTask}>
           <h3 className="text-center font-semibold uppercase text-xl">
-            Add Task
+            Update Task
           </h3>
           {error && <p className="text-red-600 text-lg text-center">{error}</p>}
           <div className="flex flex-col gap-4">
@@ -72,6 +85,7 @@ const AddTask = () => {
               <input
                 type="text"
                 id="title"
+                defaultValue={task?.title}
                 name="title"
                 placeholder="Enter your task"
                 className="border border-second px-3 py-1 rounded"
@@ -84,6 +98,7 @@ const AddTask = () => {
                 type="text"
                 name="description"
                 placeholder="Description (Optional)"
+                defaultValue={task?.description}
                 id="description"
                 className="border h-40 border-second px-3 py-1 rounded"
               />
@@ -93,7 +108,7 @@ const AddTask = () => {
               disabled={isPending}
               className="btn bg-gradient-to-r disabled:bg-gray-500 from-main to-second text-white"
             >
-              Add Task {isPending && <Cruding />}
+              Update Task {isPending && <Cruding />}
             </button>
           </div>
         </form>
@@ -102,4 +117,4 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default UpdateTask;
